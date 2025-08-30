@@ -177,6 +177,7 @@
             min-height: 180px;
             border: 2px solid rgba(58, 97, 134, 0.6);
             transition: all 0.3s;
+            position: relative;
         }
         
         .response-container:hover {
@@ -358,6 +359,99 @@
             background: rgba(255, 126, 95, 0.3);
         }
         
+        /* تخصيص شريط التمرير */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 126, 95, 0.5);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 126, 95, 0.7);
+        }
+        
+        /* أنماط جديدة للميزات المضافة */
+        .char-counter {
+            text-align: left;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #d0e1f9;
+        }
+        
+        .char-counter.warning {
+            color: #ff7e5f;
+            font-weight: bold;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 126, 95, 0.2);
+            color: #ff7e5f;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(255, 126, 95, 0.3);
+        }
+        
+        .facebook-dev {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(59, 89, 152, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(59, 89, 152, 0.3);
+        }
+        
+        .facebook-dev img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .facebook-dev a {
+            color: #8bb9ff;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .facebook-dev a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(78, 205, 196, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -385,25 +479,14 @@
                 width: 130px;
                 padding: 12px;
             }
-        }
-        
-        /* تخصيص شريط التمرير */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 126, 95, 0.5);
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 126, 95, 0.7);
+            
+            .copy-btn {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 15px;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -445,8 +528,9 @@
         </div>
         
         <div class="input-container">
-            <label for="userInput"><i class="fas fa-pencil-alt"></i> أدخل رسالتك:</label>
-            <textarea id="userInput" placeholder="سولني حاجة ونجاوبك...">شكون انت؟ وشنو تقدرو دير؟</textarea>
+            <label for="userInput"><i class="fas fa-pencil-alt"></i> أدخل رسالتك (الحد الأقصى: 160 حرف):</label>
+            <textarea id="userInput" placeholder="سولني حاجة ونجاوبك..." maxlength="160"></textarea>
+            <div class="char-counter" id="charCounter">0/160 حرف</div>
         </div>
         
         <div class="button-container">
@@ -467,6 +551,9 @@
         </div>
         
         <div class="response-container">
+            <button class="copy-btn" id="copyButton">
+                <i class="fas fa-copy"></i> نسخ الرد
+            </button>
             <h3><i class="fas fa-reply"></i> رد AI Algeria:</h3>
             <div id="responseText">آهلا بيك، أنا AI Algeria، النموذج الجزائري باللهجة الجزائرية. سولني حاجة ونجاوبك...</div>
         </div>
@@ -482,9 +569,21 @@
             <div id="historyItems"></div>
         </div>
         
+        <div class="facebook-dev">
+            <i class="fab fa-facebook" style="font-size: 2rem; color: #3b5998;"></i>
+            <div>
+                <p>مطور فيسبوك المعتمد:</p>
+                <a href="https://www.facebook.com/Medani.abdelaziz" target="_blank">Medani.abdelaziz</a>
+            </div>
+        </div>
+        
         <div class="dev-info">
             <p><i class="fas fa-code"></i> مطور التطبيق: مداني عبد العزيز 🇩🇿</p>
         </div>
+    </div>
+    
+    <div class="copy-notification" id="copyNotification">
+        <i class="fas fa-check-circle"></i> تم نسخ الرد إلى الحافظة!
     </div>
     
     <footer>
@@ -502,6 +601,9 @@
             const toggleHistory = document.getElementById('toggleHistory');
             const chatHistory = document.getElementById('chatHistory');
             const historyItems = document.getElementById('historyItems');
+            const charCounter = document.getElementById('charCounter');
+            const copyButton = document.getElementById('copyButton');
+            const copyNotification = document.getElementById('copyNotification');
             
             // API key ثابت (مخفي الآن)
             const fixedApiKey = "AIzaSyDaLxMLGlLpggCw6u2t1Ff-To2X05vUNL0";
@@ -525,6 +627,57 @@
             // تحميل المحادثات السابقة من التخزين المحلي
             loadConversations();
             
+            // تحديث عداد الأحرف
+            userInput.addEventListener('input', updateCharCounter);
+            
+            function updateCharCounter() {
+                const text = userInput.value;
+                const length = text.length;
+                const maxLength = userInput.maxLength;
+                
+                // التحقق إذا كان النص يحتوي على أحرف غير لاتينية (Unicode)
+                const hasUnicode = /[^\u0000-\u007F]/.test(text) || /[\u{1F600}-\u{1F64F}]/u.test(text);
+                const actualMaxLength = hasUnicode ? 70 : 160;
+                
+                // تحديث الحد الأقصى إذا كان مختلفًا
+                if (userInput.maxLength !== actualMaxLength) {
+                    userInput.maxLength = actualMaxLength;
+                    
+                    // إذا تجاوز النص الحد الجديد، تقليمه
+                    if (length > actualMaxLength) {
+                        userInput.value = text.substring(0, actualMaxLength);
+                        updateCharCounter();
+                        return;
+                    }
+                }
+                
+                // تحديث عداد الأحرف
+                charCounter.textContent = `${length}/${actualMaxLength} حرف`;
+                
+                // تغيير اللون إذا تجاوزت 80% من الحد
+                if (length > actualMaxLength * 0.8) {
+                    charCounter.classList.add('warning');
+                } else {
+                    charCounter.classList.remove('warning');
+                }
+            }
+            
+            // نسخ النص إلى الحافظة
+            copyButton.addEventListener('click', function() {
+                const textToCopy = responseText.innerText;
+                
+                navigator.clipboard.writeText(textToCopy).then(function() {
+                    // إظهار إشعار النسخ
+                    copyNotification.style.display = 'block';
+                    setTimeout(function() {
+                        copyNotification.style.display = 'none';
+                    }, 2000);
+                }).catch(function(err) {
+                    console.error('Failed to copy: ', err);
+                    alert('فشل في نسخ النص. يرجى المحاولة مرة أخرى.');
+                });
+            });
+            
             // زر عرض/إخفاء المحادثات السابقة
             toggleHistory.addEventListener('click', function() {
                 if (chatHistory.style.display === 'block') {
@@ -546,6 +699,15 @@
                 // التحقق من صحة المدخلات
                 if (!text) {
                     showError(algerianResponses.no_message);
+                    return;
+                }
+                
+                // التحقق من طول النص
+                const hasUnicode = /[^\u0000-\u007F]/.test(text) || /[\u{1F600}-\u{1F64F}]/u.test(text);
+                const maxLength = hasUnicode ? 70 : 160;
+                
+                if (text.length > maxLength) {
+                    showError(`الرسالة طويلة زيادة. الحد الأقصى هو ${maxLength} حرف للرسائل ${hasUnicode ? 'التي تحتوي على أحرف خاصة' : 'العادية'}`);
                     return;
                 }
                 
@@ -684,6 +846,9 @@
             
             // تعريف AI Algeria عند تحميل الصفحة
             responseText.innerHTML = formatResponse(algerianResponses.identity);
+            
+            // تحديث عداد الأحرف الأولي
+            updateCharCounter();
         });
     </script>
 </body>
