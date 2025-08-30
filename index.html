@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كركلا AI - تطبيق التواصل باللهجة التبسية</title>
+    <title>AI Algeria - تطبيق التواصل باللهجة الجزائرية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -419,8 +419,8 @@
     
     <header>
         <div class="header-content">
-            <h1>كركلا AI - باللهجة التبسية</h1>
-            <p>تطبيق ويب للتواصل مع كركلا AI - النموذج الجزائري المتطور باللهجة التبسية</p>
+            <h1>AI Algeria - باللهجة الجزائرية</h1>
+            <p>تطبيق ويب للتواصل مع AI Algeria - النموذج الجزائري المتطور باللهجة الجزائرية</p>
         </div>
     </header>
     
@@ -440,13 +440,13 @@
             </div>
             <div class="feature">
                 <i class="fas fa-language"></i>
-                <p>لهجة تبسية</p>
+                <p>لهجة جزائرية</p>
             </div>
         </div>
         
         <div class="input-container">
             <label for="userInput"><i class="fas fa-pencil-alt"></i> أدخل رسالتك:</label>
-            <textarea id="userInput" placeholderهاك سولني وانا نجاوبك...">شكون انت؟ وشنو تقدرو دير؟</textarea>
+            <textarea id="userInput" placeholder="سولني حاجة ونجاوبك...">شكون انت؟ وشنو تقدرو دير؟</textarea>
         </div>
         
         <div class="button-container">
@@ -457,18 +457,18 @@
         
         <div class="loading" id="loading">
             <i class="fas fa-spinner"></i>
-            <p>عاوّد نتصبّرو... كركلا يجهز الرد</p>
+            <p>اصبر شوية... AI Algeria يجهز الرد</p>
         </div>
         
         <div class="error" id="error"></div>
         
         <div class="success" id="success">
-            !واش راك تسمع، كركلا رد عليك
+            !واش تسمع، AI Algeria رد عليك
         </div>
         
         <div class="response-container">
-            <h3><i class="fas fa-reply"></i> رد كركلا:</h3>
-            <div id="responseText">هاك كركلا AI، النموذج الجزائري باللهجة التبسية. سولني وانا نجاوبك...</div>
+            <h3><i class="fas fa-reply"></i> رد AI Algeria:</h3>
+            <div id="responseText">آهلا بيك، أنا AI Algeria، النموذج الجزائري باللهجة الجزائرية. سولني حاجة ونجاوبك...</div>
         </div>
         
         <div style="text-align: center;">
@@ -483,12 +483,12 @@
         </div>
         
         <div class="dev-info">
-            <p><i class="fas fa-code"></i> مطور التطبيق: MEDANI abdelaziz 🇩🇿</p>
+            <p><i class="fas fa-code"></i> مطور التطبيق: مداني عبد العزيز 🇩🇿</p>
         </div>
     </div>
     
     <footer>
-        <p>تم التطوير باستخدام تقنيات الذكاء الاصطناعي المتطورة | © 2023 | باللهجة التبسية الأصيلة</p>
+        <p>تم التطوير باستخدام تقنيات الذكاء الاصطناعي المتطورة | © 2025 | باللهجة الجزائرية الأصيلة</p>
     </footer>
 
     <script>
@@ -506,21 +506,21 @@
             // API key ثابت (مخفي الآن)
             const fixedApiKey = "AIzaSyDaLxMLGlLpggCw6u2t1Ff-To2X05vUNL0";
             
-            // قائمة بالردود التبسية المحلية
-            const tebessiResponses = {
-                greeting: "!آهلا بيك، أنا كركلا AI، النموذج الجزائري باللهجة التبسية. شنو تحب تسولني",
-                waiting: "عاوّد نتصبّرو... كركلا يجهز الرد",
-                success: "!واش راك تسمع، كركلا رد عليك",
-                error: "ياويليو! فيه مشكلة، حاول تاني",
-                no_message: "ياولي ما كاتبلي والو، دير الرسالة باش نرد عليك",
-                identity: "أنا كركلا AI، نموذج ذكاء اصطناعي جزائري تاع ولاية تبسة. طورت بواسطة MEDANI abdelaziz. أنا هنا باش نجاوب على أسئلتك ونساعدك في أي حاجة تخص بيها."
+            // قائمة بالردود الجزائرية المحلية
+            const algerianResponses = {
+                greeting: "!آهلا بيك، أنا AI Algeria، النموذج الجزائري باللهجة الجزائرية. شنو تحب تسولني",
+                waiting: "اصبر شوية... AI Algeria يجهز الرد",
+                success: "!واش تسمع، AI Algeria رد عليك",
+                error: "ياويلي! فيه مشكلة، حاول تاني",
+                no_message: "ياولي ما كاتبلي والو، اكتب الرسالة باش نرد عليك",
+                identity: "أنا AI Algeria، نموذج ذكاء اصطناعي جزائري. طورت بواسطة مداني عبد العزيز. أنا هنا باش نجاوب على أسئلتك ونساعدك في أي حاجة تخص بيها."
             };
             
             // تخزين المحادثات
             let conversations = [];
             
-            // تعيين النص الافتراضي باللهجة التبسية
-            responseText.textContent = tebessiResponses.identity;
+            // تعيين النص الافتراضي باللهجة الجزائرية
+            responseText.textContent = algerianResponses.identity;
             
             // تحميل المحادثات السابقة من التخزين المحلي
             loadConversations();
@@ -545,17 +545,17 @@
                 
                 // التحقق من صحة المدخلات
                 if (!text) {
-                    showError(tebessiResponses.no_message);
+                    showError(algerianResponses.no_message);
                     return;
                 }
                 
                 // إظهار تحميل
                 loading.style.display = 'block';
                 sendButton.disabled = true;
-                responseText.textContent = tebessiResponses.waiting;
+                responseText.textContent = algerianResponses.waiting;
                 
-                // إعداد بيانات الطلب مع التأكيد على الهوية التبسية
-                const prompt = "رد علي دائما كأنك كركلا AI، نموذج ذكاء اصطناعي جزائري من ولاية تبسة. لا تذكر أي شيء عن Gemini أو غيره. استخدم اللهجة التبسية الجزائرية في ردك. أنت طورت بواسطة MEDANI abdelaziz. الآن اجب على السؤال التالي: " + text;
+                // إعداد بيانات الطلب مع التأكيد على الهوية الجزائرية
+                const prompt = "رد علي دائما كأنك AI Algeria، نموذج ذكاء اصطناعي جزائري. لا تذكر أي شيء عن Gemini أو غيره. استخدم اللهجة الجزائرية في ردك. أنت طورت بواسطة مداني عبد العزيز. الآن اجب على السؤال التالي: " + text;
                 
                 const requestData = {
                     contents: [
@@ -580,7 +580,7 @@
                 .then(response => {
                     if (!response.ok) {
                         return response.text().then(text => {
-                            throw new Error(text || tebessiResponses.error);
+                            throw new Error(text || algerianResponses.error);
                         });
                     }
                     return response.json();
@@ -599,7 +599,7 @@
                         // حفظ المحادثة
                         saveConversation(text, response);
                     } else {
-                        showError('ماعندناش رد، عاوّد جرب');
+                        showError('ماعندناش رد، جرب تاني');
                     }
                 })
                 .catch(err => {
@@ -607,19 +607,19 @@
                     loading.style.display = 'none';
                     sendButton.disabled = false;
                     
-                    // في حالة الخطأ، نعرض ردًا محليًا باللهجة التبسية
-                    responseText.innerHTML = formatResponse("آهلا بيك! أنا كركلا AI، النموذج الجزائري باللهجة التبسية. دابا عندي مشكلة تقنية، ولكن عاملة نتحاسب. سولني على حاجة أخرى ونجاوبك بلا مشاكل.");
+                    // في حالة الخطأ، نعرض ردًا محليًا باللهجة الجزائرية
+                    responseText.innerHTML = formatResponse("آهلا بيك! أنا AI Algeria، النموذج الجزائري باللهجة الجزائرية. دابا عندي مشكلة تقنية، ولكن عاملة نتحاسب. سولني على حاجة أخرى ونجاوبك بلا مشاكل.");
                     success.style.display = 'block';
                     
                     // حفظ المحادثة حتى مع وجود خطأ
-                    saveConversation(text, "آهلا بيك! أنا كركلا AI، النموذج الجزائري باللهجة التبسية. دابا عندي مشكلة تقنية، ولكن عاملة نتحاسب. سولني على حاجة أخرى ونجاوبك بلا مشاكل.");
+                    saveConversation(text, "آهلا بيك! أنا AI Algeria، النموذج الجزائري باللهجة الجزائرية. دابا عندي مشكلة تقنية، ولكن عاملة نتحاسب. سولني على حاجة أخرى ونجاوبك بلا مشاكل.");
                 });
             });
             
             function showError(message) {
                 error.textContent = message;
                 error.style.display = 'block';
-                responseText.textContent = 'ياويليو! ' + message;
+                responseText.textContent = 'ياويلي! ' + message;
             }
             
             function formatResponse(text) {
@@ -643,14 +643,14 @@
                 }
                 
                 // حفظ في التخزين المحلي
-                localStorage.setItem('karkla_conversations', JSON.stringify(conversations));
+                localStorage.setItem('algeria_ai_conversations', JSON.stringify(conversations));
                 
                 // تحديث عرض المحادثات
                 updateConversationsDisplay();
             }
             
             function loadConversations() {
-                const savedConversations = localStorage.getItem('karkla_conversations');
+                const savedConversations = localStorage.getItem('algeria_ai_conversations');
                 if (savedConversations) {
                     conversations = JSON.parse(savedConversations);
                     updateConversationsDisplay();
@@ -682,8 +682,8 @@
                 });
             }
             
-            // تعريف كركلا AI عند تحميل الصفحة
-            responseText.innerHTML = formatResponse(tebessiResponses.identity);
+            // تعريف AI Algeria عند تحميل الصفحة
+            responseText.innerHTML = formatResponse(algerianResponses.identity);
         });
     </script>
 </body>
