@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Algeria - الدردشة باللهجة الجزائرية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         :root {
@@ -23,6 +24,8 @@
             --msg-ai-bg: #e9f5ff;
             --msg-user-bg: #d4e6ff;
             --border-radius: 20px;
+            --online-color: #4caf50;
+            --offline-color: #f44336;
         }
         
         body {
@@ -37,24 +40,50 @@
         .header {
             background: linear-gradient(135deg, var(--primary-color), #1a4d80);
             color: var(--light-text);
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             position: relative;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
         .header h1 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-bottom: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
+            font-weight: 600;
         }
         
         .header p {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.9;
+        }
+        
+        .api-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 6px;
+            font-size: 0.7rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .status-online {
+            background-color: var(--online-color);
+            box-shadow: 0 0 6px var(--online-color);
+        }
+        
+        .status-offline {
+            background-color: var(--offline-color);
         }
         
         .chat-container {
@@ -65,43 +94,46 @@
             flex-direction: column;
             gap: 15px;
             max-width: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23f8f9fa" width="100" height="100"/><path fill="%23e9f5ff" d="M0,0 L100,100 M100,0 L0,100" stroke-width="0.5"/></svg>');
         }
         
         .message {
-            max-width: 85%;
+            max-width: 90%;
             padding: 12px 15px;
             border-radius: var(--border-radius);
             position: relative;
             line-height: 1.5;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             transform-origin: center;
-            animation: messageAppear 0.4s cubic-bezier(0.18, 1.25, 0.4, 1);
+            animation: messageAppear 0.3s ease;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
         
         @keyframes messageAppear {
-            0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+            0% { opacity: 0; transform: scale(0.95) translateY(5px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
         
         .ai-message {
             align-self: flex-start;
-            background-color: var(--msg-ai-bg);
+            background: linear-gradient(135deg, var(--msg-ai-bg), #e3efff);
             border-bottom-left-radius: 5px;
+            border-left: 3px solid var(--primary-color);
         }
         
         .user-message {
             align-self: flex-end;
-            background-color: var(--msg-user-bg);
+            background: linear-gradient(135deg, var(--msg-user-bg), #c9dfff);
             border-bottom-right-radius: 5px;
+            border-right: 3px solid var(--accent-color);
         }
         
         .message-actions {
             position: absolute;
-            top: 5px;
-            left: 5px;
+            top: 6px;
+            left: 6px;
             display: flex;
-            gap: 5px;
+            gap: 6px;
             opacity: 0.6;
             transition: opacity 0.3s;
         }
@@ -112,7 +144,7 @@
         
         .user-message .message-actions {
             left: auto;
-            right: 5px;
+            right: 6px;
         }
         
         .btn {
@@ -128,31 +160,34 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: rgba(255, 255, 255, 0.7);
         }
         
         .btn:hover {
             color: var(--primary-color);
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: scale(1.1);
         }
         
         .input-area {
-            padding: 15px;
+            padding: 12px;
             background-color: #fff;
             border-top: 1px solid #ddd;
             display: flex;
             gap: 10px;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.03);
         }
         
         .message-input {
             flex: 1;
-            padding: 12px 15px;
+            padding: 10px 15px;
             border: 1px solid #ddd;
-            border-radius: 30px;
+            border-radius: 25px;
             outline: none;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: all 0.3s;
             background-color: #f8f9fa;
+            font-family: 'Cairo', sans-serif;
         }
         
         .message-input:focus {
@@ -165,19 +200,20 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+            font-size: 1rem;
         }
         
         .send-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
         
         .send-btn:active {
@@ -186,9 +222,9 @@
         
         .footer {
             text-align: center;
-            padding: 15px;
+            padding: 10px;
             background-color: #f1f1f1;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #666;
             border-top: 1px solid #ddd;
         }
@@ -209,17 +245,19 @@
             background-color: #2d2d2d;
             color: #f8f8f2;
             padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
+            border-radius: 6px;
+            margin: 8px 0;
             overflow-x: auto;
             position: relative;
             font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            border-left: 3px solid var(--accent-color);
         }
         
         .copy-code {
             position: absolute;
-            top: 5px;
-            left: 5px;
+            top: 6px;
+            left: 6px;
             background-color: #555;
             color: white;
             border: none;
@@ -232,31 +270,33 @@
         
         .copy-code:hover {
             background-color: #666;
+            transform: scale(1.05);
         }
         
         .typing-indicator {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             color: #666;
             font-style: italic;
             margin-top: 10px;
-            padding: 8px 15px;
+            padding: 8px 12px;
             background-color: var(--msg-ai-bg);
             border-radius: 15px;
             align-self: flex-start;
             animation: pulse 1.5s infinite;
+            font-size: 0.85rem;
         }
         
         @keyframes pulse {
             0% { opacity: 0.6; }
             50% { opacity: 1; }
-            100% { opacity: 0.6; }
+             100% { opacity: 0.6; }
         }
         
         .typing-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background-color: #666;
             border-radius: 50%;
             animation: typingAnimation 1.4s infinite ease-in-out;
@@ -268,36 +308,60 @@
         
         @keyframes typingAnimation {
             0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-5px); }
+            30% { transform: translateY(-4px); }
         }
         
         @media (max-width: 768px) {
             .message {
-                max-width: 90%;
+                max-width: 92%;
+                padding: 10px 12px;
+                font-size: 0.85rem;
             }
             
             .header h1 {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
             
             .btn {
-                width: 30px;
-                height: 30px;
+                width: 22px;
+                height: 22px;
+                font-size: 0.7rem;
+            }
+            
+            .chat-container {
+                padding: 10px;
+                gap: 12px;
+            }
+            
+            .input-area {
+                padding: 10px;
+            }
+            
+            .message-input {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .send-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
             }
         }
         
         .emoji {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             vertical-align: middle;
             margin: 0 2px;
         }
         
         .developer-info {
-            background-color: #e9f5ff;
+            background: linear-gradient(135deg, #e9f5ff, #d4e6ff);
             border-radius: 10px;
             padding: 10px;
-            margin: 10px 0;
-            border-right: 4px solid var(--primary-color);
+            margin: 8px 0;
+            border-right: 3px solid var(--primary-color);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
         }
         
         .social-link {
@@ -307,15 +371,18 @@
             color: var(--primary-color);
             text-decoration: none;
             margin-top: 5px;
-            padding: 5px 10px;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 5px;
+            padding: 4px 8px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
             transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.8rem;
         }
         
         .social-link:hover {
             background-color: white;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
         }
         
         .message.highlight {
@@ -323,16 +390,59 @@
         }
         
         @keyframes highlight {
-            0% { background-color: var(--msg-ai-bg); }
-            50% { background-color: rgba(255, 226, 130, 0.5); }
-            100% { background-color: var(--msg-ai-bg); }
+            0% { background: linear-gradient(135deg, var(--msg-ai-bg), #e3efff); }
+            50% { background: linear-gradient(135deg, #ffeac5, #ffdfaa); }
+            100% { background: linear-gradient(135deg, var(--msg-ai-bg), #e3efff); }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background-color: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            max-width: 280px;
+            font-size: 0.8rem;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            border-left: 3px solid var(--online-color);
+        }
+        
+        .notification.error {
+            border-left: 3px solid var(--offline-color);
+        }
+        
+        .message-content {
+            line-height: 1.5;
+        }
+        
+        .message-content p {
+            margin-bottom: 8px;
+        }
+        
+        .message-content :last-child {
+            margin-bottom: 0;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1><i class="fas fa-robot"></i> AI Algeria - الدردشة باللهجة الجزائرية</h1>
+        <h1><i class="fas fa-robot"></i> AI Algerian - الدردشة باللهجة الجزائرية</h1>
         <p>تحدث مع الذكاء الاصطناعي باللهجة الجزائرية <span class="emoji">🇩🇿</span></p>
+        <div class="api-status">
+            <span class="status-dot status-online" id="statusDot"></span>
+            <span id="statusText">متصل بالخادم</span>
+        </div>
     </div>
     
     <div class="chat-container" id="chatContainer">
@@ -341,7 +451,11 @@
                 <button class="btn copy-btn"><i class="fas fa-copy"></i></button>
                 <button class="btn tts-btn"><i class="fas fa-volume-up"></i></button>
             </div>
-            أهلا بيك! <span class="emoji">👋</span> أنا مساعدك الذكي باللهجة الجزائرية. شنواش تحب تحكي معايا؟ <span class="emoji">😊</span>
+            <div class="message-content">
+                <p>آهلاً بيك يا صديقي! <span class="emoji">👋</span></p>
+                <p>أنا <strong>AI Algerian</strong>، الذكاء الاصطناعي اللي يتكلم باللهجة الجزائرية ويحب يضحك ويساعد! <span class="emoji">😄</span></p>
+                <p>شنواش تحب تحكي معايا اليوم؟ عندي stories ونكاش ونصائح... وخبارك؟ <span class="emoji">💬</span></p>
+            </div>
         </div>
     </div>
     
@@ -362,6 +476,11 @@
             const chatContainer = document.getElementById('chatContainer');
             const messageInput = document.getElementById('messageInput');
             const sendBtn = document.getElementById('sendBtn');
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            
+            const API_KEY = 'AIzaSyBL5vvrHdXpKcOFE5sCrMO5RNxcz9cJM3Q';
+            const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
             
             // إضافة رسالة إلى الدردشة
             function addMessage(text, isUser = false) {
@@ -380,7 +499,12 @@
                 }
                 
                 const messageContent = document.createElement('div');
-                messageContent.innerHTML = text;
+                messageContent.className = 'message-content';
+                
+                // معالجة النص لعرض الأكواد بشكل صحيح
+                const processedText = processTextForDisplay(text);
+                messageContent.innerHTML = processedText;
+                
                 messageDiv.appendChild(messageContent);
                 
                 chatContainer.appendChild(messageDiv);
@@ -404,8 +528,22 @@
                     });
                     
                     ttsBtn.addEventListener('click', () => {
+                        // إيقاف أي كلام سابق
+                        window.speechSynthesis.cancel();
+                        
                         const speech = new SpeechSynthesisUtterance(messageContent.textContent);
-                        speech.lang = 'ar';
+                        speech.lang = 'ar-SA';
+                        speech.rate = 0.9;
+                        speech.pitch = 1;
+                        
+                        // البحث عن صوت عربي
+                        const voices = window.speechSynthesis.getVoices();
+                        let arabicVoice = voices.find(voice => voice.lang.includes('ar'));
+                        
+                        if (arabicVoice) {
+                            speech.voice = arabicVoice;
+                        }
+                        
                         window.speechSynthesis.speak(speech);
                     });
                 }
@@ -419,88 +557,107 @@
                 }, 100);
             }
             
+            // معالجة النص لعرض الأكواد بشكل صحيح
+            function processTextForDisplay(text) {
+                // تقسيم النص إلى أسطر
+                const lines = text.split('\n');
+                let result = '';
+                let inCodeBlock = false;
+                
+                for (let line of lines) {
+                    // اكتشاف بداية كود بلوك
+                    if (line.trim().startsWith('```')) {
+                        if (!inCodeBlock) {
+                            result += '<div class="code-block"><button class="copy-code">نسخ</button><code>';
+                            inCodeBlock = true;
+                        } else {
+                            result += '</code></div>';
+                            inCodeBlock = false;
+                        }
+                        continue;
+                    }
+                    
+                    if (inCodeBlock) {
+                        // داخل كود بلوك - إظهار النص كما هو
+                        result += line + '\n';
+                    } else {
+                        // خارج كود بلوك - معالجة النص العادي
+                        if (line.trim() !== '') {
+                            result += '<p>' + line + '</p>';
+                        }
+                    }
+                }
+                
+                // إذا انتهى النص ونحن داخل كود بلوك، نغلقه
+                if (inCodeBlock) {
+                    result += '</code></div>';
+                }
+                
+                return result;
+            }
+            
             // الحصول على رد من الذكاء الاصطناعي
             async function getAIResponse(userMessage) {
                 // إذا سأل المستخدم عن المطور
                 if (userMessage.includes('مطور') || userMessage.includes('طورك') || userMessage.includes('دربك') || userMessage.includes('صاحبك') || userMessage.includes('مين صنعك')) {
                     return `
-                        <div class="developer-info">
-                            <strong>مداني عبد العزيز</strong> <span class="emoji">👨‍💻</span> هو اللي طورني ودربني <span class="emoji">🚀</span>.<br>
-                            تقدر تتواصل معاه على الفيسبوك:<br>
-                            <a href="https://www.facebook.com/Medani.abdelaziz" target="_blank" class="social-link">
-                                <i class="fab fa-facebook"></i> Medani.abdelaziz
-                            </a>
-                        </div>
+مداني عبد العزيز هو اللي درّبني وعلّمني كل حاجة! الراجل ما يستهانش بيه والله! 🚀
+
+تقدر تتواصل معاه على الفيسبوك:
+https://www.facebook.com/Medani.abdelaziz
                     `;
                 }
                 
                 try {
-                    // إعداد الطلب إلى واجهة برمجة التطبيقات
-                    const API_KEY = 'AIzaSyBL5vvrHdXpKcOFE5sCrMO5RNxcz9cJM3Q';
-                    const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
-                    
-                    const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+                    const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'X-goog-api-key': API_KEY
                         },
                         body: JSON.stringify({
                             contents: [{
                                 parts: [{
-                                    text: `أنت مساعد ذكي يتحدث باللهجة الجزائرية الأصلية. يجب أن تكون ردودك باللهجة الجزائرية الصحيحة واستخدم الايموجيز المناسبة. 
-                                    الرد على هذا السؤال: ${userMessage}
-                                    يجب أن تكون الإجابة قصيرة وطبيعية كما يتحدث الإنسان.`
+                                    text: `أنت AI Algerian، ذكاء اصطناعي يتحدث باللهجة الجزائرية باسلوب مضحك، مهذب وذي كاريزما. 
+                                    يجب أن تكون ردودك باللهجة الجزائرية الصحيحة، واستخدم الايموجيز المناسبة.
+                                    كن مرحاً وودوداً في ردودك.
+                                    الردود يجب أن تكون مختصرة (لا تزيد عن 200 حرف) إلا إذا طلب منك المستخدم شرحاً مفصلاً.
+                                    الرد على هذا السؤال: ${userMessage}`
                                 }]
                             }],
                             generationConfig: {
-                                temperature: 0.7,
+                                temperature: 0.8,
                                 topK: 40,
                                 topP: 0.95,
-                                maxOutputTokens: 1024,
+                                maxOutputTokens: 250,
                             }
                         })
                     });
                     
                     if (!response.ok) {
-                        throw new Error('خطأ في الاتصال بالخادم');
+                        const errorData = await response.json();
+                        throw new Error(errorData.error?.message || 'خطأ في الاتصال بالخادم');
                     }
                     
                     const data = await response.json();
                     
                     if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
-                        return data.candidates[0].content.parts[0].text;
+                        let responseText = data.candidates[0].content.parts[0].text;
+                        
+                        // تقصير الرد إذا كان طويلاً جداً
+                        if (responseText.length > 200 && !userMessage.includes('اشرح') && !userMessage.includes('تفصيل')) {
+                            responseText = responseText.substring(0, 197) + '...';
+                        }
+                        
+                        return responseText;
                     } else {
                         throw new Error('رد غير متوقع من الخادم');
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    // في حالة حدوث خطأ، نعود إلى الردود المحلية باللهجة الجزائرية
-                    return getFallbackResponse(userMessage);
+                    return `يا هاني! واللهى عندي مشكلة تقنية بسيطة... 😅
+ما تقلقش، جرب تاني بعد شوية وكل حاجة تماها!`;
                 }
-            }
-            
-            // الردود الاحتياطية باللهجة الجزائرية
-            function getFallbackResponse(userMessage) {
-                // ردود عشوائية باللهجة الجزائرية الصحيحة
-                const responses = [
-                    `آهلا بيك! <span class="emoji">😊</span> كي داير؟ شنواش الأخبار؟`,
-                    `واش تقصد؟ <span class="emoji">🤔</span> ممكن توضحلي أكثر؟ نحب نفهمك والو.`,
-                    `بالنسبة لسؤالك، أنا هنا نخدمك ونجاوبك على كل الأسئلة <span class="emoji">👍</span>`,
-                    `ياااه! <span class="emoji">😃</span> هذا سؤال مزيان! أنا مبرمج باش نعاونك في كل حاجة.`,
-                    `أنا نتفهمليك. <span class="emoji">👍</span> تقدر تحكي معايا بالدارجة وانا نفهمك.`,
-                    `ماعنديش إجابة على هاد السؤال حاليا، ولكنني نتعلم كل يوم <span class="emoji">📚</span>`,
-                    `هادا أمر ماعرفش عليه والو، ولكنني نساعدك في حاجات أخرى <span class="emoji">😊</span>`,
-                    `نقدر نحكي على مواضيع أخرى؟ هاد الموضوع ماعنديش فيه معلومات <span class="emoji">🤷‍♂️</span>`,
-                    `نحوس على إجابة لسؤالك، ولكن في انتظارها تقدر تسأل على حاجة أخرى <span class="emoji">😊</span>`,
-                    `هادا مثال على الكود لي طلبتيه:<br>
-                    <div class="code-block">
-                        <button class="copy-code">نسخ</button>
-                        <code>function salam() {\n  console.log("آهلا بيك!");\n}</code>
-                    </div>
-                    هاد الكود باش يطبع "آهلا بيك!" في الكونسول.`
-                ];
-                
-                return responses[Math.floor(Math.random() * responses.length)];
             }
             
             // إظهار مؤشر الكتابة
@@ -509,7 +666,7 @@
                 typingDiv.className = 'typing-indicator';
                 typingDiv.id = 'typingIndicator';
                 typingDiv.innerHTML = `
-                    AI Algeria يكتب <span class="emoji">✍️</span>
+                    AI Algerian يكتب <span class="emoji">✍️</span>
                     <div class="typing-dot"></div>
                     <div class="typing-dot"></div>
                     <div class="typing-dot"></div>
@@ -530,7 +687,7 @@
             async function handleSendMessage() {
                 const message = messageInput.value.trim();
                 if (message) {
-                    addMessage(message, true);
+                    addMessage(`<p>${message}</p>`, true);
                     messageInput.value = '';
                     
                     // محاكاة وقت انتظار للرد
@@ -542,24 +699,28 @@
                         addMessage(response);
                     } catch (error) {
                         hideTypingIndicator();
-                        addMessage(`عذرًا، حدث خطأ في الاتصال. <span class="emoji">😞</span>`);
+                        addMessage(`<p>عذرًا، حدث خطأ في الاتصال. <span class="emoji">😞</span></p>`);
                     }
                     
-                    // إضافة مستمعين للأزرار في الكود إذا وجد
-                    const codeBlocks = document.querySelectorAll('.code-block');
-                    codeBlocks.forEach(block => {
-                        const copyButton = block.querySelector('.copy-code');
-                        copyButton.addEventListener('click', () => {
-                            const code = block.querySelector('code').textContent;
-                            navigator.clipboard.writeText(code)
-                                .then(() => {
-                                    copyButton.textContent = 'تم النسخ!';
-                                    setTimeout(() => {
-                                        copyButton.textContent = 'نسخ';
-                                    }, 2000);
+                    // إضافة مستمعين لأزرار النسخ في الأكواد
+                    setTimeout(() => {
+                        const codeBlocks = document.querySelectorAll('.code-block');
+                        codeBlocks.forEach(block => {
+                            const copyButton = block.querySelector('.copy-code');
+                            if (copyButton) {
+                                copyButton.addEventListener('click', () => {
+                                    const code = block.querySelector('code').textContent;
+                                    navigator.clipboard.writeText(code)
+                                        .then(() => {
+                                            copyButton.textContent = 'تم النسخ!';
+                                            setTimeout(() => {
+                                                copyButton.textContent = 'نسخ';
+                                            }, 2000);
+                                        });
                                 });
+                            }
                         });
-                    });
+                    }, 100);
                 }
             }
             
@@ -574,30 +735,54 @@
             });
             
             // إضافة مستمعين لأزرار النسخ وقراءة النص في الرسالة الأولى
-            document.querySelectorAll('.copy-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const message = this.closest('.message').lastChild.textContent;
-                    navigator.clipboard.writeText(message)
-                        .then(() => {
-                            this.innerHTML = '<i class="fas fa-check"></i>';
-                            setTimeout(() => {
-                                this.innerHTML = '<i class="fas fa-copy"></i>';
-                            }, 2000);
-                        });
-                });
-            });
-            
-            document.querySelectorAll('.tts-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const message = this.closest('.message').lastChild.textContent;
-                    const speech = new SpeechSynthesisUtterance(message);
-                    speech.lang = 'ar';
-                    window.speechSynthesis.speak(speech);
-                });
-            });
+            const initialMessage = document.querySelector('.ai-message');
+            if (initialMessage) {
+                const copyBtn = initialMessage.querySelector('.copy-btn');
+                const ttsBtn = initialMessage.querySelector('.tts-btn');
+                
+                if (copyBtn) {
+                    copyBtn.addEventListener('click', function() {
+                        const message = this.closest('.message').querySelector('.message-content').textContent;
+                        navigator.clipboard.writeText(message)
+                            .then(() => {
+                                this.innerHTML = '<i class="fas fa-check"></i>';
+                                setTimeout(() => {
+                                    this.innerHTML = '<i class="fas fa-copy"></i>';
+                                }, 2000);
+                            });
+                    });
+                }
+                
+                if (ttsBtn) {
+                    ttsBtn.addEventListener('click', function() {
+                        window.speechSynthesis.cancel();
+                        
+                        const message = this.closest('.message').querySelector('.message-content').textContent;
+                        const speech = new SpeechSynthesisUtterance(message);
+                        speech.lang = 'ar-SA';
+                        speech.rate = 0.9;
+                        
+                        const voices = window.speechSynthesis.getVoices();
+                        let arabicVoice = voices.find(voice => voice.lang.includes('ar'));
+                        
+                        if (arabicVoice) {
+                            speech.voice = arabicVoice;
+                        }
+                        
+                        window.speechSynthesis.speak(speech);
+                    });
+                }
+            }
             
             // التركيز على حقل الإدخال عند التحميل
             messageInput.focus();
+            
+            // تهيئة أصوات Text-to-Speech
+            if (window.speechSynthesis) {
+                window.speechSynthesis.onvoiceschanged = function() {
+                    // الأصوات متاحة الآن
+                };
+            }
         });
     </script>
 </body>
